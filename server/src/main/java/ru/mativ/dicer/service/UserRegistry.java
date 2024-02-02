@@ -6,7 +6,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.WebSocketSession;
 
 import ru.mativ.dicer.entity.User;
 import ru.mativ.dicer.exception.UserNotFoundDicerException;
@@ -17,24 +16,23 @@ public class UserRegistry {
 
 	private Map<String, User> users = new HashMap<>();
 
-	public User get(WebSocketSession session) throws UserNotFoundDicerException {
-		User user = users.get(session.getId());
+	public User get(String sessionId) throws UserNotFoundDicerException {
+		User user = users.get(sessionId);
 		if (user == null) {
 			throw new UserNotFoundDicerException();
 		}
 		return user;
 	}
 
-	public void registry(WebSocketSession session) {
-		String id = session.getId();
-		User user = new User(id);
-		users.put(id, user);
+	public void registry(String sessionId) {
+		User user = new User(sessionId);
+		users.put(sessionId, user);
 	}
 
-	public void close(WebSocketSession session) {
+	public void close(String sessionId) {
 		User user;
 		try {
-			user = get(session);
+			user = get(sessionId);
 			users.remove(user.getId());
 		} catch (UserNotFoundDicerException e) {
 			LOG.warn(e.getLocalizedMessage());

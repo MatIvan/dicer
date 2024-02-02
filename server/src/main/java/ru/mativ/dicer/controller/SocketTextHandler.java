@@ -33,14 +33,15 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	@Autowired
 	RpcParser rpcParser;
 
-	private static UserRegistry userRegistry;
-    @Autowired
-    public void setUserRegistry(UserRegistry userRegistry) {
-    	SocketTextHandler.userRegistry = userRegistry;
-    }
-
 	@Autowired
 	RpcController rpcController;
+
+	private static UserRegistry userRegistry;
+
+	@Autowired
+	public void setUserRegistry(UserRegistry userRegistry) {
+		SocketTextHandler.userRegistry = userRegistry;
+	}
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) {
@@ -56,9 +57,10 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		LOG.debug(session.getId());
-		userRegistry.registry(session);
-		sessions.put(session.getId(), session);
+		final String sessionId = session.getId();
+		LOG.debug(sessionId);
+		userRegistry.registry(sessionId);
+		sessions.put(sessionId, session);
 	}
 
 	@Override
@@ -68,24 +70,26 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		LOG.debug(session.getId());
-		sessions.remove(session.getId());
-		userRegistry.close(session);
+		final String sessionId = session.getId();
+		LOG.debug(sessionId);
+		sessions.remove(sessionId);
+		userRegistry.close(sessionId);
 	}
 
 	private void process(WebSocketSession session, String payload) throws RpcException, DicerException {
+		final String sessionId = session.getId();
 		RpcPayload cmd = rpcParser.parseCommandPayload(payload);
 		try {
-			User user = userRegistry.get(session);
+			User user = userRegistry.get(sessionId);
 			Method method = getMethod(cmd);
 			Class<?> dataClass = method.getParameterTypes()[1]; // 0 - User, 1 - data
 			Object obj = rpcParser.parseData(cmd.getData(), dataClass);
 			method.invoke(rpcController, user, obj);
 		} catch (UserNotFoundDicerException e) {
-			LOG.error(session.getId(), e);
+			LOG.error(sessionId, e);
 			throw e;
 		} catch (Exception e) {
-			LOG.error(session.getId(), e);
+			LOG.error(sessionId, e);
 			throw new MethodRpcException();
 		}
 	}

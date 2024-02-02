@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
@@ -22,6 +21,9 @@ import ru.mativ.dicer.service.RpcParser;
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+	private static final String VALUE_SEPORATOR = "=";
+	private static final String COOKIE_SEPERATOR = ";";
+	private static final String COOKIE = "cookie";
 	private static final Logger LOG = LoggerFactory.getLogger(WebSocketConfig.class);
 
 	@Override
@@ -43,11 +45,10 @@ public class WebSocketConfig implements WebSocketConfigurer {
 			public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
 					WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 				try {
-					HttpHeaders h = request.getHeaders();
-					String cookies = request.getHeaders().get("cookie").get(0);
-					String[] arr = cookies.split(";");
+					String cookies = request.getHeaders().get(COOKIE).get(0);
+					String[] arr = cookies.split(COOKIE_SEPERATOR);
 					for (int i = 0; i < arr.length; i++) {
-						String[] pair = arr[i].split("=");
+						String[] pair = arr[i].split(VALUE_SEPORATOR);
 						if (Objects.equals(pair[0], RpcParser.DICER_AUTH)) {
 							attributes.put(RpcParser.DICER_AUTH, pair[1]);
 							return true;
@@ -56,7 +57,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 				} catch (Exception e) {
 					LOG.error(e.getLocalizedMessage());
 				}
-				//TODO create advicer. throw new UserAuthDicerException();
+				// TODO create advicer. throw new UserAuthDicerException();
 				return false;
 			}
 

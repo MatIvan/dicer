@@ -15,6 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import ru.mativ.dicer.annotation.DiceControllerMethod;
+import ru.mativ.dicer.entity.AuthData;
 import ru.mativ.dicer.entity.RpcPayload;
 import ru.mativ.dicer.entity.User;
 import ru.mativ.dicer.exception.DicerException;
@@ -59,7 +60,9 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		final String sessionId = session.getId();
 		LOG.debug(sessionId);
-		userRegistry.registry(sessionId);
+		String authStr = (String) session.getAttributes().get(RpcParser.DICER_AUTH);
+		AuthData authData = rpcParser.parse(authStr, AuthData.class);
+		userRegistry.registry(sessionId, authData);
 		sessions.put(sessionId, session);
 	}
 

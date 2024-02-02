@@ -1,18 +1,25 @@
 window.onload = () => {
-	
+
+	initAuthData();
+
 	const btnRoll = document.getElementById("btn-roll");
-	btnRoll.onclick=()=>{
-		const msg ={
+	btnRoll.onclick = () => {
+		const msg = {
 			type: "roll",
 			data: {
 				faces: 20,
 				count: 2
 			}
-		}; 
+		};
 		ws.send(JSON.stringify(msg));
 	}
 	connect();
 }
+
+function initAuthData() {
+	document.cookie = "dicer-auth = " + JSON.stringify({ name: "dicer1", theme: "black" });
+	//TODO request user to enter name
+};
 
 var ws;
 
@@ -24,8 +31,8 @@ function connect() {
 	ws.addEventListener("close", (event) => {
 		console.log("WS close", event);
 	});
-	ws.addEventListener("error", (event,e) => {
-		console.log("WS error", event,e);
+	ws.addEventListener("error", (event, e) => {
+		console.log("WS error", event, e);
 	});
 	ws.addEventListener("message", (event) => {
 		console.log("WS message", event.data);

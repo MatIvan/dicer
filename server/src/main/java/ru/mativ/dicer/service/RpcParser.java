@@ -10,12 +10,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import ru.mativ.dicer.entity.RpcPayload;
-import ru.mativ.dicer.exception.RpcException;
 import ru.mativ.dicer.exception.ParseRpcException;
+import ru.mativ.dicer.exception.RpcException;
 
 @Service
 public class RpcParser {
 	private static final Logger LOG = LoggerFactory.getLogger(RpcParser.class);
+
+	public static final String DICER_AUTH = "dicer-auth";
 
 	private static final String MSG_TYPE = "type";
 	private static final String MSG_DATA = "data";
@@ -42,4 +44,12 @@ public class RpcParser {
 		}
 	}
 
+	public <T> T parse(String data, Class<T> dataClass) throws ParseRpcException {
+		try {
+			return GSON.fromJson(data, dataClass);
+		} catch (Exception e) {
+			LOG.error(e.getLocalizedMessage(), e);
+			throw new ParseRpcException();
+		}
+	}
 }

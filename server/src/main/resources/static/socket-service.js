@@ -1,4 +1,4 @@
-import SicketHandler from "./socket-handler.js";
+import { SicketHandler } from "./socket-handler.js";
 
 var ws;
 
@@ -45,9 +45,14 @@ function roll(dices) {
 	send("roll", { dices: dices });
 }
 
-const SocketService = {
+/*const SocketService = {
 	connect,
 	updateProps,
 	roll,
-}
-export default SocketService;
+}*/
+
+export const SocketService = {
+	connect,
+	updateProps,
+	roll,
+};

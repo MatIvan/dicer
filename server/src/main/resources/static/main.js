@@ -1,4 +1,4 @@
-import SocketService from "./socket-service.js";
+import { SocketService } from "./socket-service.js";
 
 window.onload = () => {
 	initCookies();
@@ -11,6 +11,13 @@ window.onload = () => {
 	btnRoll.onclick = () => {
 		SocketService.roll([{ faсe: 20 }, { faсe: 20 }]);
 	}
+
+	const colorPicker = document.querySelector("#color-picker");
+	colorPicker.addEventListener("change", (e) => {
+		const theme = e.target.value;
+		console.debug("onColorChanged: ", theme);
+		SocketService.updateProps({ theme: theme })
+	}, false);
 }
 
 function initCookies() {
@@ -25,4 +32,5 @@ function getCookie(name) {
 	));
 	return matches ? decodeURIComponent(matches[1]) : null;
 }
+
 

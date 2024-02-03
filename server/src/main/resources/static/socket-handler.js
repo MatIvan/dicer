@@ -1,36 +1,37 @@
-class SicketHandlerImpl {
+import { UserRegistry } from "./user-registry.js";
+import { DicerService } from "./dicer-service.js";
 
-	invoke(payload) {
-		console.debug("invoke: ", payload);
-
-		/**@type {CMD}*/
-		const cmd = JSON.parse(payload);
-
-		if (typeof this[cmd.type] == "function") {
-			this[cmd.type](cmd.data);
-		} else {
-			LOG.debug("Method '" + method + "' have no implimentation.");
-		}
-	}
-
+const COMMANDS = {
 	PROPS_UPDATED(data) {
 		console.log("PROPS_UPDATED: ", data);
-		//const { userId, props } = data;
-	}
-
+		const { userId, props } = data;
+		UserRegistry.update(userId, props);
+	},
 	WELLCOME(data) {
 		console.log("WELLCOME: ", data);
-	}
-
+	},
 	NEW_USER(data) {
 		console.log("NEW_USER: ", data);
-	}
-
+		UserRegistry.put(data);
+	},
 	ROLL(data) {
 		console.log("ROLL: ", data);
+		const { userId, dicePack } = data;
+		const user = UserRegistry.get(userId);
+		DicerService.roll(user, dicePack);
 	}
-
 }
 
-const SicketHandler = new SicketHandlerImpl();
-export default SicketHandler;
+function invoke(payload) {
+	console.debug("invoke: ", payload);
+	const cmd = JSON.parse(payload);
+	if (typeof COMMANDS[cmd.type] == "function") {
+		COMMANDS[cmd.type](cmd.data);
+	} else {
+		console.warn("Method '" + method + "' have no implimentation.");
+	}
+}
+
+export const SicketHandler = {
+	invoke,
+};

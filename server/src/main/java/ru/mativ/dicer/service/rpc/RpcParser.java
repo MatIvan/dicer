@@ -1,4 +1,4 @@
-package ru.mativ.dicer.service;
+package ru.mativ.dicer.service.rpc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,5 +51,9 @@ public class RpcParser {
 			LOG.error(e.getLocalizedMessage(), e);
 			throw new ParseRpcException();
 		}
+	}
+
+	public String toJson(Object obj) {
+		return GSON.toJson(obj);
 	}
 }

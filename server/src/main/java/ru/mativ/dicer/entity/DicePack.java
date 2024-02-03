@@ -1,32 +1,25 @@
 package ru.mativ.dicer.entity;
 
+import java.util.Arrays;
+
 public class DicePack {
-	private int faces;
-	private int count;
+	private Dice[] dices;
 
 	public DicePack() {
 		super();
 	}
 
-	public int getFaces() {
-		return faces;
+	public Dice[] getDices() {
+		return dices;
 	}
 
-	public void setFaces(int faces) {
-		this.faces = faces;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
+	public void setDices(Dice[] dices) {
+		this.dices = dices;
 	}
 
 	@Override
 	public String toString() {
-		return "DicePack [faces=" + faces + ", count=" + count + "]";
+		return "DicePack [dices=" + Arrays.toString(dices) + "]";
 	}
 
 }

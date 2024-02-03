@@ -2,8 +2,6 @@ package ru.mativ.dicer.controller;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -23,13 +21,13 @@ import ru.mativ.dicer.exception.MethodRpcException;
 import ru.mativ.dicer.exception.RpcException;
 import ru.mativ.dicer.exception.UncknownRpcException;
 import ru.mativ.dicer.exception.UserNotFoundDicerException;
-import ru.mativ.dicer.service.RpcParser;
-import ru.mativ.dicer.service.UserRegistry;
+import ru.mativ.dicer.service.SocketService;
+import ru.mativ.dicer.service.rpc.RpcParser;
 
 public class SocketTextHandler extends TextWebSocketHandler {
-	private static final Logger LOG = LoggerFactory.getLogger(SocketTextHandler.class);
+	private static final String S_S = "%s: %s";
 
-	private Map<String, WebSocketSession> sessions = new HashMap<>();
+	private static final Logger LOG = LoggerFactory.getLogger(SocketTextHandler.class);
 
 	@Autowired
 	RpcParser rpcParser;
@@ -37,16 +35,12 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	@Autowired
 	RpcController rpcController;
 
-	private static UserRegistry userRegistry;
-
 	@Autowired
-	public void setUserRegistry(UserRegistry userRegistry) {
-		SocketTextHandler.userRegistry = userRegistry;
-	}
+	SocketService socketService;
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) {
-		LOG.debug(session.getId(), message);
+		LOG.debug(S_S.formatted(session.getId(), message.getPayload()));
 		try {
 			process(session, message.getPayload());
 		} catch (DicerException | RpcException e) {
@@ -58,12 +52,13 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		final String sessionId = session.getId();
-		LOG.debug(sessionId);
+		LOG.debug(session.getId());
 		String authStr = (String) session.getAttributes().get(RpcParser.DICER_AUTH);
 		AuthData authData = rpcParser.parse(authStr, AuthData.class);
-		userRegistry.registry(sessionId, authData);
-		sessions.put(sessionId, session);
+		LOG.debug(String.valueOf(authData));
+		User user = socketService.put(session, authData);
+		LOG.debug(S_S.formatted(session.getId(), user.getId()));
+		rpcController.onconnect(user);
 	}
 
 	@Override
@@ -73,17 +68,15 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		final String sessionId = session.getId();
-		LOG.debug(sessionId);
-		sessions.remove(sessionId);
-		userRegistry.close(sessionId);
+		LOG.debug(session.getId());
+		socketService.remove(session);
 	}
 
 	private void process(WebSocketSession session, String payload) throws RpcException, DicerException {
 		final String sessionId = session.getId();
 		RpcPayload cmd = rpcParser.parseCommandPayload(payload);
 		try {
-			User user = userRegistry.get(sessionId);
+			User user = socketService.getUser(session);
 			Method method = getMethod(cmd);
 			Class<?> dataClass = method.getParameterTypes()[1]; // 0 - User, 1 - data
 			Object obj = rpcParser.parseData(cmd.getData(), dataClass);

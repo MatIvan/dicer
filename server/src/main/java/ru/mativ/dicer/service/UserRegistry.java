@@ -2,6 +2,7 @@ package ru.mativ.dicer.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,33 +18,38 @@ import ru.mativ.dicer.exception.UserNotFoundDicerException;
 public class UserRegistry {
 	private static final Logger LOG = LoggerFactory.getLogger(UserRegistry.class);
 
-	private Map<String, User> users = new HashMap<>();
+	private Map<String, User> users = new HashMap<>();// key - userId
 
-	public User get(String sessionId) throws UserNotFoundDicerException {
-		User user = users.get(sessionId);
+	private String generateUserId(AuthData authData) {
+		UUID uid = UUID.randomUUID();
+		return uid.toString();
+	}
+
+	public User get(String userId) throws UserNotFoundDicerException {
+		User user = users.get(userId);
 		if (user == null) {
 			throw new UserNotFoundDicerException();
 		}
 		return user;
 	}
 
-	public void registry(String sessionId, AuthData authData) throws UserAuthDicerException {
+	public String registry(AuthData authData) throws UserAuthDicerException {
 		try {
-			User user = new User(sessionId, authData.getName());
-			UserProps props = new UserProps();
-			props.setTheme(authData.getTheme());
-			user.setProps(props);
-			users.put(sessionId, user);
+			String userId = generateUserId(authData);
+			User user = new User(userId, authData.getName());
+			user.setProps(new UserProps());
+			users.put(userId, user);
 			LOG.info(user.toString());
+			return user.getId();
 		} catch (Exception e) {
 			LOG.warn(e.getLocalizedMessage());
 			throw new UserAuthDicerException();
 		}
 	}
 
-	public void close(String sessionId) {
+	public void close(String userId) {
 		try {
-			User user = get(sessionId);
+			User user = get(userId);
 			users.remove(user.getId());
 			LOG.info(user.toString());
 		} catch (UserNotFoundDicerException e) {

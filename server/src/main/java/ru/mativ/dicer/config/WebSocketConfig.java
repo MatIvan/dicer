@@ -16,7 +16,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import ru.mativ.dicer.controller.SocketTextHandler;
-import ru.mativ.dicer.service.RpcParser;
+import ru.mativ.dicer.service.rpc.RpcParser;
 
 @Configuration
 @EnableWebSocket

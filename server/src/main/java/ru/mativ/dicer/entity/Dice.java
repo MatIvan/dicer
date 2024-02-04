@@ -1,19 +1,19 @@
 package ru.mativ.dicer.entity;
 
 public class Dice {
-	private Integer faсe;
+	private Integer face;
 	private Integer value;
 
 	public Dice() {
 		super();
 	}
 
-	public Integer getFaсe() {
-		return faсe;
+	public Integer getFace() {
+		return face;
 	}
 
-	public void setFaсe(Integer faсe) {
-		this.faсe = faсe;
+	public void setFace(Integer face) {
+		this.face = face;
 	}
 
 	public Integer getValue() {
@@ -26,7 +26,7 @@ public class Dice {
 
 	@Override
 	public String toString() {
-		return "Dice [faсe=" + faсe + ", value=" + value + "]";
+		return "Dice [face=" + face + ", value=" + value + "]";
 	}
 
 }

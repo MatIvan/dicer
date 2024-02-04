@@ -11,6 +11,7 @@ body {
 }
 
 #root {
+	font-size: large;
 	margin: 1em;
 	flex-grow: 1;
 	display: flex;

@@ -12,7 +12,7 @@ public class RollService {
 	private static final Random RND = new Random(System.currentTimeMillis());
 
 	private int getRnd(Dice dice) {
-		return RND.nextInt(dice.getFaсe()) + 1;
+		return RND.nextInt(dice.getFace()) + 1;
 	}
 
 	public DicePack roll(DicePack pack) {
@@ -21,7 +21,7 @@ public class RollService {
 		for (int i = 0; i < dices.length; i++) {
 			Dice dice = dices[i];
 			Dice res = new Dice();
-			res.setFaсe(dice.getFaсe());
+			res.setFace(dice.getFace());
 			res.setValue(getRnd(dice));
 			result[i] = res;
 		}

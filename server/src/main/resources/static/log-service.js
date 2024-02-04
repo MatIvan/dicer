@@ -45,14 +45,34 @@ function getMessageElement(message) {
 	}
 	if (dicePack) {
 		const el = div("log-row-dice");
-		el.innerText = JSON.stringify(dicePack);
+		el.innerText = dicePackToString(dicePack);
 		return el;
 	}
 }
 
 function dicePackToString(dicePack) {
 	const { dices } = dicePack;
-
+	let faces = [];
+	let count = [];
+	let sum = 0;
+	dices.forEach(dice => {
+		sum += dice.value;
+		const face = dice.face;
+		const i = faces.indexOf(face);
+		if (i < 0) {
+			faces.push(face);
+			count.push(1);
+		} else {
+			count[i]++;
+		}
+	});
+	let res = "";
+	faces.forEach((face, i) => {
+		res += count[i].toString() + "d" + face.toString()
+		res += i < faces.length - 1 ? "+" : "";
+	});
+	res += "=" + sum
+	return res;
 }
 
 function info(user, text) {

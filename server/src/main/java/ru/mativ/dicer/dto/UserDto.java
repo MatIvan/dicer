@@ -1,11 +1,9 @@
 package ru.mativ.dicer.dto;
 
-import ru.mativ.dicer.entity.UserProps;
-
 public class UserDto {
 	private String userId;
 	private String name;
-	private UserProps props;
+	private String theme;
 
 	public UserDto() {
 		super();
@@ -27,17 +25,17 @@ public class UserDto {
 		this.name = name;
 	}
 
-	public UserProps getProps() {
-		return props;
+	public String getTheme() {
+		return theme;
 	}
 
-	public void setProps(UserProps props) {
-		this.props = props;
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 	@Override
 	public String toString() {
-		return "UserDto [userId=" + userId + ", name=" + name + ", props=" + props + "]";
+		return "UserDto [userId=" + userId + ", name=" + name + ", theme=" + theme + "]";
 	}
 
 }

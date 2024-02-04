@@ -2,24 +2,33 @@ import { UserRegistry } from "./user-registry.js";
 import { DicerService } from "./dicer-service.js";
 
 const COMMANDS = {
-	PROPS_UPDATED(data) {
-		console.log("PROPS_UPDATED: ", data);
-		const { userId, props } = data;
-		UserRegistry.update(userId, props);
+
+	USER_UPDATED(data) {
+		console.log("USER_UPDATED: ", data);
+		UserRegistry.update(data);
 	},
+
 	WELLCOME(data) {
 		console.log("WELLCOME: ", data);
 	},
+
 	NEW_USER(data) {
 		console.log("NEW_USER: ", data);
 		UserRegistry.put(data);
 	},
+	
+	REMOVE_USER(data) {
+		console.log("REMOVE_USER: ", data);
+		UserRegistry.remove(data);
+	},
+
 	ROLL(data) {
 		console.log("ROLL: ", data);
 		const { userId, dicePack } = data;
 		const user = UserRegistry.get(userId);
 		DicerService.roll(user, dicePack);
 	}
+	
 }
 
 function invoke(payload) {
@@ -28,7 +37,7 @@ function invoke(payload) {
 	if (typeof COMMANDS[cmd.type] == "function") {
 		COMMANDS[cmd.type](cmd.data);
 	} else {
-		console.warn("Method '" + method + "' have no implimentation.");
+		console.warn("Method '" + cmd.type + "' have no implimentation.");
 	}
 }
 

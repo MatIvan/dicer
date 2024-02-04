@@ -4,10 +4,11 @@ function put(user) {
 	users.set(user.userId, user);
 }
 
-function update(userId, props) {
-	const user = users.get(userId);
+function update(userData) {
+	const user = users.get(userData.userId);
 	if (user) {
-		user.props = props;
+		user.name = userData.name;
+		user.theme = userData.theme;
 	}
 }
 
@@ -15,8 +16,13 @@ function get(userId) {
 	return users.get(userId);
 }
 
+function remove(user) {
+	return users.delete(user.userId);
+}
+
 export const UserRegistry = {
 	put,
 	update,
 	get,
+	remove,
 };

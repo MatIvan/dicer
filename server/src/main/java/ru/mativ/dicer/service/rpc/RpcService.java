@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ru.mativ.dicer.dto.PropsUpdatedDto;
 import ru.mativ.dicer.dto.RollDto;
 import ru.mativ.dicer.dto.UserDto;
 import ru.mativ.dicer.dto.WellcomeDto;
@@ -26,20 +25,15 @@ public class RpcService {
 		socketService.sendTo(user.getId(), RpcTypes.WELLCOME, dto);
 	}
 
-	public void propsUpdated(User user) {
+	public void userUpdated(User user) {
 		LOG.debug(String.valueOf(user));
-		PropsUpdatedDto dto = new PropsUpdatedDto();
-		dto.setUserId(user.getId());
-		dto.setProps(user.getProps());
-		socketService.sendToAll(RpcTypes.PROPS_UPDATED, dto);
+		UserDto dto = user.toDto();
+		socketService.sendToAll(RpcTypes.USER_UPDATED, dto);
 	}
 
 	public void newUser(User user) {
 		LOG.debug(String.valueOf(user));
-		UserDto dto = new UserDto();
-		dto.setUserId(user.getId());
-		dto.setName(user.getName());
-		dto.setProps(user.getProps());
+		UserDto dto = user.toDto();
 		socketService.sendToAll(RpcTypes.NEW_USER, dto);
 	}
 
@@ -49,6 +43,12 @@ public class RpcService {
 		dto.setUserId(user.getId());
 		dto.setDicePack(pack);
 		socketService.sendToAll(RpcTypes.ROLL, dto);
+	}
+
+	public void removeUser(User user) {
+		LOG.debug(String.valueOf(user));
+		UserDto dto = user.toDto();
+		socketService.sendToAll(RpcTypes.REMOVE_USER, dto);
 	}
 
 }

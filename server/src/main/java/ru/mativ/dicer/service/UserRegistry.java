@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import ru.mativ.dicer.entity.AuthData;
 import ru.mativ.dicer.entity.User;
 import ru.mativ.dicer.entity.UserProps;
 import ru.mativ.dicer.exception.UserAuthDicerException;
@@ -20,7 +19,7 @@ public class UserRegistry {
 
 	private Map<String, User> users = new HashMap<>();// key - userId
 
-	private String generateUserId(AuthData authData) {
+	private String generateUserId() {
 		UUID uid = UUID.randomUUID();
 		return uid.toString();
 	}
@@ -33,11 +32,12 @@ public class UserRegistry {
 		return user;
 	}
 
-	public String registry(AuthData authData) throws UserAuthDicerException {
+	public String registry(UserProps props) throws UserAuthDicerException {
 		try {
-			String userId = generateUserId(authData);
-			User user = new User(userId, authData.getName());
-			user.setProps(new UserProps());
+			String userId = generateUserId();
+			User user = new User(userId);
+			user.setName(props.getName());
+			user.setTheme(props.getTheme());
 			users.put(userId, user);
 			LOG.info(user.toString());
 			return user.getId();

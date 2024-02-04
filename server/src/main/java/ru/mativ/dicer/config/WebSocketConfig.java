@@ -1,7 +1,6 @@
 package ru.mativ.dicer.config;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import ru.mativ.dicer.controller.SocketTextHandler;
-import ru.mativ.dicer.service.rpc.RpcParser;
 
 @Configuration
 @EnableWebSocket
@@ -46,18 +44,11 @@ public class WebSocketConfig implements WebSocketConfigurer {
 					WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 				try {
 					String cookies = request.getHeaders().get(COOKIE).get(0);
-					String[] arr = cookies.split(COOKIE_SEPERATOR);
-					for (int i = 0; i < arr.length; i++) {
-						String[] pair = arr[i].split(VALUE_SEPORATOR);
-						if (Objects.equals(pair[0], RpcParser.DICER_AUTH)) {
-							attributes.put(RpcParser.DICER_AUTH, pair[1]);
-							return true;
-						}
-					}
+					cookiesToAttributes(cookies, attributes);
+					return true;
 				} catch (Exception e) {
 					LOG.error(e.getLocalizedMessage());
 				}
-				// TODO create advicer. throw new UserAuthDicerException();
 				return false;
 			}
 
@@ -66,5 +57,13 @@ public class WebSocketConfig implements WebSocketConfigurer {
 					WebSocketHandler wsHandler, Exception exception) {
 			}
 		};
+	}
+
+	public void cookiesToAttributes(String cookies, Map<String, Object> attributes) {
+		String[] arr = cookies.split(COOKIE_SEPERATOR);
+		for (int i = 0; i < arr.length; i++) {
+			String[] pair = arr[i].split(VALUE_SEPORATOR);
+			attributes.put(pair[0], pair[1]);
+		}
 	}
 }

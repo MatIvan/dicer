@@ -1,36 +1,40 @@
 import { SocketService } from "./socket-service.js";
+import { StorageService } from "./storage-service.js";
 
-window.onload = () => {
-	initCookies();
-	SocketService.connect(() => {
-		const props = JSON.parse(getCookie("dicer-props"));
-		SocketService.updateProps(props);
-	});
-
-	const btnRoll = document.getElementById("btn-roll");
-	btnRoll.onclick = () => {
-		SocketService.roll([{ faсe: 20 }, { faсe: 20 }]);
-	}
-
-	const colorPicker = document.querySelector("#color-picker");
-	colorPicker.addEventListener("change", (e) => {
-		const theme = e.target.value;
-		console.debug("onColorChanged: ", theme);
-		SocketService.updateProps({ theme: theme })
-	}, false);
-}
-
-function initCookies() {
-	document.cookie = "dicer-auth = " + JSON.stringify({ name: "dicer1" });
-	document.cookie = "dicer-props = " + JSON.stringify({ theme: "black" });
-	//TODO request user to enter name
+const DICER = {
+	namePicker: null,
+	colorPicker: null,
+	btnRoll: null,
 };
 
-function getCookie(name) {
-	const matches = document.cookie.match(new RegExp(
-		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-	));
-	return matches ? decodeURIComponent(matches[1]) : null;
+window.onload = () => {
+	init();
+	bind();
+	SocketService.connect(() => {
+		console.log("connected.");
+	});
 }
 
+function init() {
+	DICER.namePicker = document.querySelector("#name-picker");
+	DICER.colorPicker = document.querySelector("#color-picker");
+	DICER.btnRoll = document.querySelector("#btn-roll");
 
+	const { name, theme } = StorageService.getProps();
+	DICER.namePicker.value = name;
+	DICER.colorPicker.value = theme;
+}
+
+function bind() {
+	DICER.btnRoll.onclick = () => {
+		SocketService.roll([{ faсe: 20 }, { faсe: 20 }]);
+	}
+	DICER.namePicker.addEventListener("blur", (e) => {
+		StorageService.setName(e.target.value);
+		SocketService.updateUser();
+	}, false);
+	DICER.colorPicker.addEventListener("change", (e) => {
+		StorageService.setTheme(e.target.value);
+		SocketService.updateUser();
+	}, false);
+}

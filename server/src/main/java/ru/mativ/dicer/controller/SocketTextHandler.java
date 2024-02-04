@@ -1,6 +1,7 @@
 package ru.mativ.dicer.controller;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
@@ -13,10 +14,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import ru.mativ.dicer.annotation.DiceControllerMethod;
-import ru.mativ.dicer.entity.AuthData;
 import ru.mativ.dicer.entity.RpcPayload;
 import ru.mativ.dicer.entity.User;
+import ru.mativ.dicer.entity.UserProps;
 import ru.mativ.dicer.exception.DicerException;
+import ru.mativ.dicer.exception.InternalRpcException;
 import ru.mativ.dicer.exception.MethodRpcException;
 import ru.mativ.dicer.exception.RpcException;
 import ru.mativ.dicer.exception.UncknownRpcException;
@@ -53,11 +55,10 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		LOG.debug(session.getId());
-		String authStr = (String) session.getAttributes().get(RpcParser.DICER_AUTH);
-		AuthData authData = rpcParser.parse(authStr, AuthData.class);
-		LOG.debug(String.valueOf(authData));
-		User user = socketService.put(session, authData);
-		LOG.debug(S_S.formatted(session.getId(), user.getId()));
+		UserProps props = rpcParser.getUserProps(session);
+		User user = socketService.put(session, props);
+		rpcParser.setUserId(session, user.getId());
+		LOG.debug(S_S.formatted(session.getId(), user));
 		rpcController.onconnect(user);
 	}
 
@@ -69,7 +70,9 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		LOG.debug(session.getId());
+		User user = socketService.getUser(session);
 		socketService.remove(session);
+		rpcController.onclose(user);
 	}
 
 	private void process(WebSocketSession session, String payload) throws RpcException, DicerException {
@@ -81,12 +84,15 @@ public class SocketTextHandler extends TextWebSocketHandler {
 			Class<?> dataClass = method.getParameterTypes()[1]; // 0 - User, 1 - data
 			Object obj = rpcParser.parseData(cmd.getData(), dataClass);
 			method.invoke(rpcController, user, obj);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			LOG.error(sessionId, e);
+			throw new MethodRpcException();
 		} catch (UserNotFoundDicerException e) {
 			LOG.error(sessionId, e);
 			throw e;
 		} catch (Exception e) {
 			LOG.error(sessionId, e);
-			throw new MethodRpcException();
+			throw new InternalRpcException();
 		}
 	}
 

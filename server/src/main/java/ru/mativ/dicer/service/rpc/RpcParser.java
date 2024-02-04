@@ -3,6 +3,7 @@ package ru.mativ.dicer.service.rpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketSession;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,15 +11,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import ru.mativ.dicer.entity.RpcPayload;
+import ru.mativ.dicer.entity.UserProps;
 import ru.mativ.dicer.exception.ParseRpcException;
 import ru.mativ.dicer.exception.RpcException;
 
 @Service
 public class RpcParser {
 	private static final Logger LOG = LoggerFactory.getLogger(RpcParser.class);
-
-	public static final String DICER_AUTH = "dicer-auth";
-
+	private static final String DICER_PROPS = "dicer-props";
+	private static final String USER_ID = "userId";
 	private static final String MSG_TYPE = "type";
 	private static final String MSG_DATA = "data";
 	private static final Gson GSON = new GsonBuilder().create();
@@ -44,7 +45,7 @@ public class RpcParser {
 		}
 	}
 
-	public <T> T parse(String data, Class<T> dataClass) throws ParseRpcException {
+	private <T> T parse(String data, Class<T> dataClass) throws ParseRpcException {
 		try {
 			return GSON.fromJson(data, dataClass);
 		} catch (Exception e) {
@@ -56,4 +57,18 @@ public class RpcParser {
 	public String toJson(Object obj) {
 		return GSON.toJson(obj);
 	}
+
+	public String getUserId(WebSocketSession session) {
+		return (String) session.getAttributes().get(USER_ID);
+	}
+
+	public UserProps getUserProps(WebSocketSession session) throws ParseRpcException {
+		String propsStr = (String) session.getAttributes().get(DICER_PROPS);
+		return parse(propsStr, UserProps.class);
+	}
+
+	public void setUserId(WebSocketSession session, String userId) {
+		session.getAttributes().put(USER_ID, userId);
+	}
+
 }

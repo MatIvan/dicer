@@ -1,4 +1,5 @@
 import { SicketHandler } from "./socket-handler.js";
+import { StorageService } from "./storage-service.js";
 
 var ws;
 
@@ -15,12 +16,12 @@ function send(type, data) {
 	ws.send(JSON.stringify({ type: type, data: data }));
 }
 
-function connect(onConnect) {
+function connect(onopen) {
 	ws = new WebSocket(getWsUrl());
 
 	ws.addEventListener("open", (event) => {
 		console.debug("WS open", event);
-		onConnect();
+		onopen();
 	});
 
 	ws.addEventListener("close", (event) => {
@@ -37,22 +38,16 @@ function connect(onConnect) {
 	});
 }
 
-function updateProps(props) {
-	send("props", props);
+function updateUser() {
+	send("update", StorageService.getProps());
 }
 
 function roll(dices) {
 	send("roll", { dices: dices });
 }
 
-/*const SocketService = {
-	connect,
-	updateProps,
-	roll,
-}*/
-
 export const SocketService = {
 	connect,
-	updateProps,
+	updateUser,
 	roll,
 };

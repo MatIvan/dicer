@@ -15,7 +15,6 @@ import ru.mativ.dicer.service.rpc.RpcService;
 @Component
 public class RpcController {
 	private static final String S_S = "%s, %s";
-
 	private static final Logger LOG = LoggerFactory.getLogger(RpcController.class);
 
 	@Autowired
@@ -30,17 +29,23 @@ public class RpcController {
 		rpc.newUser(user);
 	}
 
+	public void onclose(User user) {
+		LOG.info(String.valueOf(user));
+		rpc.removeUser(user);
+	}
+
 	@DiceControllerMethod(type = "roll")
 	public void roll(User user, DicePack pack) {
 		LOG.info(S_S.formatted(user, pack));
 		rpc.rollToAll(user, roller.roll(pack));
 	}
 
-	@DiceControllerMethod(type = "props")
-	public void props(User user, UserProps userProps) {
-		LOG.info(S_S.formatted(user, userProps));
-		user.setProps(userProps);
-		rpc.propsUpdated(user);
+	@DiceControllerMethod(type = "update")
+	public void update(User user, UserProps props) {
+		LOG.info(S_S.formatted(user, props));
+		user.setName(props.getName());
+		user.setTheme(props.getTheme());
+		rpc.userUpdated(user);
 	}
 
 }

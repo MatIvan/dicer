@@ -30,7 +30,7 @@ function getUserElement(user) {
 
 	const name = div("log-row-user-name");
 	name.style.color = user.theme;
-	name.innerText = user.name;
+	name.innerText = user.name + ":";
 
 	el.append(icon, name);
 	return el;
@@ -48,6 +48,11 @@ function getMessageElement(message) {
 		el.innerText = JSON.stringify(dicePack);
 		return el;
 	}
+}
+
+function dicePackToString(dicePack) {
+	const { dices } = dicePack;
+
 }
 
 function info(user, text) {

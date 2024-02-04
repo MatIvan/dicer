@@ -11,23 +11,22 @@ import ru.mativ.dicer.entity.DicePack;
 public class RollService {
 	private static final Random RND = new Random(System.currentTimeMillis());
 
-	private int getRnd(Dice dice) {
-		return RND.nextInt(dice.getFace()) + 1;
+	private Integer[] getRnd(Dice dice) {
+		final Integer count = dice.getCount();
+		Integer[] arr = new Integer[count];
+		for (int i = 0; i < count; i++) {
+			arr[i] = RND.nextInt(dice.getFace()) + 1;
+		}
+		return arr;
 	}
 
 	public DicePack roll(DicePack pack) {
 		Dice[] dices = pack.getDices();
-		Dice[] result = new Dice[dices.length];
 		for (int i = 0; i < dices.length; i++) {
 			Dice dice = dices[i];
-			Dice res = new Dice();
-			res.setFace(dice.getFace());
-			res.setValue(getRnd(dice));
-			result[i] = res;
+			dice.setValues(getRnd(dice));
 		}
-		DicePack resPack = new DicePack();
-		resPack.setDices(result);
-		return resPack;
+		return pack;
 	}
 
 }

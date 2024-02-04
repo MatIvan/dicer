@@ -27,7 +27,16 @@ function init() {
 
 function bind() {
 	UI.btnRoll.onclick = () => {
-		SocketService.roll([{ face: 20 }, { face: 20 }, { face: 4 }, { face: 6 }]);
+		SocketService.roll([
+			{
+				face: 20,
+				count: 2,
+			},
+			{
+				face: 4,
+				count: 1
+			}
+		]);
 	}
 	UI.namePicker.addEventListener("blur", (e) => {
 		StorageService.setName(e.target.value);

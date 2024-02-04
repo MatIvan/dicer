@@ -1,8 +1,11 @@
 package ru.mativ.dicer.entity;
 
+import java.util.Arrays;
+
 public class Dice {
 	private Integer face;
-	private Integer value;
+	private Integer count;
+	private Integer[] values;
 
 	public Dice() {
 		super();
@@ -16,17 +19,25 @@ public class Dice {
 		this.face = face;
 	}
 
-	public Integer getValue() {
-		return value;
+	public Integer getCount() {
+		return count;
 	}
 
-	public void setValue(Integer value) {
-		this.value = value;
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public Integer[] getValues() {
+		return values;
+	}
+
+	public void setValues(Integer[] values) {
+		this.values = values;
 	}
 
 	@Override
 	public String toString() {
-		return "Dice [face=" + face + ", value=" + value + "]";
+		return "Dice [face=" + face + ", count=" + count + ", values=" + Arrays.toString(values) + "]";
 	}
 
 }

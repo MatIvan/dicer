@@ -44,32 +44,39 @@ function getMessageElement(message) {
 		return el;
 	}
 	if (dicePack) {
+		const caption = div("log-row-dice-caption");
+		caption.innerText = dicePackToString(dicePack);
+		const lotok = div("log-row-dice-lotok");
+		dicePack.dices.forEach(dice => {
+			const itemCap = div("log-row-dice-lotok-caption");
+			itemCap.innerText = dice.count.toString() + "d" + dice.face.toString();
+			const itemVal = div("log-row-dice-lotok-values");
+			let str = "";
+			dice.values.forEach((v, i) => {
+				str += v.toString();
+				str += i < dice.values.length - 1 ? " | " : "";
+			});
+			itemVal.innerHTML = str;
+			const item = div("log-row-dice-lotok-item");
+			item.append(itemCap, itemVal);
+			lotok.append(item);
+		});
+
 		const el = div("log-row-dice");
-		el.innerText = dicePackToString(dicePack);
+		el.append(caption, lotok);
 		return el;
 	}
 }
 
 function dicePackToString(dicePack) {
 	const { dices } = dicePack;
-	let faces = [];
-	let count = [];
 	let sum = 0;
-	dices.forEach(dice => {
-		sum += dice.value;
-		const face = dice.face;
-		const i = faces.indexOf(face);
-		if (i < 0) {
-			faces.push(face);
-			count.push(1);
-		} else {
-			count[i]++;
-		}
-	});
 	let res = "";
-	faces.forEach((face, i) => {
-		res += count[i].toString() + "d" + face.toString()
-		res += i < faces.length - 1 ? "+" : "";
+	dices.forEach((dice, index) => {
+		const { face, count, values } = dice;
+		res += count.toString() + "d" + face.toString();
+		res += index < dices.length - 1 ? "+" : "";
+		values.forEach(v => sum += v);
 	});
 	res += "=" + sum
 	return res;

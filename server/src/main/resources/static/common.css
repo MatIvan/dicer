@@ -11,6 +11,7 @@ body {
 }
 
 #root {
+	overflow: hidden;
 	font-size: large;
 	margin: 1em;
 	flex-grow: 1;
@@ -25,9 +26,14 @@ body {
 	flex-grow: 1;
 	overflow-y: scroll;
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+	flex-direction: column-reverse;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
+
+/*#log-panel  > :first-child {
+    margin-top: auto !important;
+}*/
 
 .log-row {
 	display: flex;

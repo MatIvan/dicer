@@ -14,7 +14,8 @@ function log(user, message) {
 		getUserElement(user),
 		getMessageElement(message)
 	);
-	UI.logPanel.append(row);
+	//UI.logPanel.append(row);
+	UI.logPanel.insertBefore(row, UI.logPanel.firstChild);
 }
 
 function getUserElement(user) {

@@ -1,8 +1,17 @@
+import { LogService } from "./log-service.js"
 
-function roll(user, dicePack) {
-	console.log("roll: ", user, dicePack.dices);
+
+function info(user, text) {
+	LogService.info(user, text);
+	//TODO popup message
+}
+
+function onroll(user, dicePack) {
+	LogService.roll(user, dicePack);
+	//TODO popup message and visual effects
 }
 
 export const DicerService = {
-	roll,
+	onroll,
+	info
 };

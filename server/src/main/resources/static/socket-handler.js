@@ -3,32 +3,37 @@ import { DicerService } from "./dicer-service.js";
 
 const COMMANDS = {
 
-	USER_UPDATED(data) {
-		console.log("USER_UPDATED: ", data);
-		UserRegistry.update(data);
+	USER_UPDATED(user) {
+		console.log("USER_UPDATED: ", user);
+		UserRegistry.update(user);
+		DicerService.info(user, "updated");
 	},
 
 	WELLCOME(data) {
 		console.log("WELLCOME: ", data);
+		UserRegistry.setMyId(data.userId);
+		DicerService.info(null, "WELLCOME");
 	},
 
-	NEW_USER(data) {
-		console.log("NEW_USER: ", data);
-		UserRegistry.put(data);
+	NEW_USER(user) {
+		console.log("NEW_USER: ", user);
+		UserRegistry.put(user);
+		DicerService.info(user, "connected.");
 	},
-	
-	REMOVE_USER(data) {
-		console.log("REMOVE_USER: ", data);
-		UserRegistry.remove(data);
+
+	REMOVE_USER(user) {
+		console.log("REMOVE_USER: ", user);
+		UserRegistry.remove(user);
+		DicerService.info(user, "closed.");
 	},
 
 	ROLL(data) {
 		console.log("ROLL: ", data);
 		const { userId, dicePack } = data;
 		const user = UserRegistry.get(userId);
-		DicerService.roll(user, dicePack);
+		DicerService.onroll(user, dicePack);
 	}
-	
+
 }
 
 function invoke(payload) {

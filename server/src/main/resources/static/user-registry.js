@@ -1,4 +1,5 @@
 const users = new Map();
+var myId;
 
 function put(user) {
 	users.set(user.userId, user);
@@ -20,9 +21,13 @@ function remove(user) {
 	return users.delete(user.userId);
 }
 
+function setMyId(id) {
+	myId = id;
+}
 export const UserRegistry = {
 	put,
 	update,
 	get,
 	remove,
+	setMyId,
 };

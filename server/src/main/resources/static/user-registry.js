@@ -1,6 +1,15 @@
+/**
+ * @typedef {object} User
+ * @property {string} name
+ * @property {string} theme
+ */
+
 const users = new Map();
 var myId;
 
+/**
+ * @param {User} user 
+ */
 function put(user) {
 	users.set(user.userId, user);
 }
@@ -13,10 +22,17 @@ function update(userData) {
 	}
 }
 
+/**
+ * @param {number} userId
+ * @returns {User} user 
+ */
 function get(userId) {
 	return users.get(userId);
 }
 
+/**
+ * @param {User} user 
+ */
 function remove(user) {
 	return users.delete(user.userId);
 }

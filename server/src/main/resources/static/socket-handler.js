@@ -1,5 +1,6 @@
 import { UserRegistry } from "./user-registry.js";
 import { DicerService } from "./dicer-service.js";
+import DicePack from "./entity/dice-pack.js";
 
 const COMMANDS = {
 
@@ -31,7 +32,8 @@ const COMMANDS = {
 		console.log("ROLL: ", data);
 		const { userId, dicePack } = data;
 		const user = UserRegistry.get(userId);
-		DicerService.onroll(user, dicePack);
+		const pack = new DicePack(dicePack);
+		DicerService.onroll(user, pack);
 	}
 
 }

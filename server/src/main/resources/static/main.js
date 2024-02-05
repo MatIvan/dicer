@@ -1,3 +1,4 @@
+import { NotifyService } from "./notify/notify-service.js";
 import { SocketService } from "./socket-service.js";
 import { StorageService } from "./storage-service.js";
 
@@ -6,6 +7,14 @@ const UI = {
 	colorPicker: null,
 	btnRoll: null,
 };
+
+window.$ = {
+	createDiv: (className) => {
+		const el = document.createElement("div");
+		el.className = className;
+		return el;
+	}
+}
 
 window.onload = () => {
 	init();
@@ -16,6 +25,7 @@ window.onload = () => {
 }
 
 function init() {
+
 	UI.namePicker = document.querySelector("#name-picker");
 	UI.colorPicker = document.querySelector("#color-picker");
 	UI.btnRoll = document.querySelector("#btn-roll");
@@ -23,6 +33,8 @@ function init() {
 	const { name, theme } = StorageService.getProps();
 	UI.namePicker.value = name;
 	UI.colorPicker.value = theme;
+
+	NotifyService.init(document.querySelector("#log-panel"));
 }
 
 function bind() {

@@ -1,21 +1,13 @@
+import DicePack from "../entity/dice-pack.js";
 import { SocketService } from "../socket-service.js";
 
-function div(className) {
-	const el = document.createElement("div");
-	el.className = className;
-	return el;
-}
-
-function diceStr(dice) {
-	return `${dice.count}d${dice.face}`;
-}
-
-function formula(dicePack) {
+/**
+ * @param {DicePack} dicePack 
+ */
+function createFormulaElement(dicePack) {
 	const { dices } = dicePack;
-	let res = dices
-		.map(diceStr)
-		.join('+');
-	const el = div("dice-pack-log-row-formula");
+	let res = dicePack.getFormula();
+	const el = $.createDiv("dice-pack-log-row-formula");
 	el.innerText = res;
 	el.title = "/roll " + res;
 	el.onclick = () => {
@@ -24,36 +16,33 @@ function formula(dicePack) {
 	return el;
 }
 
-function seporator() {
-	const el = div("dice-pack-log-row-seporator");
+function createSeporatorElement() {
+	const el = $.createDiv("dice-pack-log-row-seporator");
 	el.innerText = "=";
 	return el;
 }
 
-function summa(dicePack) {
-	const { dices } = dicePack;
-	let sum = 0;
-	let title = "";
-	dices.forEach(dice => {
-		title += diceStr(dice) + ": ";
-		dice.values.forEach(v => {
-			sum += v;
-			title += `${v}, `;
-		});
-		title += "\r";
-	});
-	const el = div("dice-pack-log-row-summa");
-	el.innerText = sum;
-	el.title = title;
+/**
+ * @param {DicePack} dicePack 
+ */
+function createSummaElement(dicePack) {
+	const el = $.createDiv("dice-pack-log-row-summa");
+	el.innerText = dicePack.getSum();
+	el.title = dicePack.dices.map(dice => {
+		return dice.getFormula() + ": " + dice.values.join(", ");
+	}).join("\r");
 	return el;
 }
 
+/**
+ * @param {DicePack} dicePack 
+ */
 function create(dicePack) {
-	const el = div("dice-pack-log-row");
+	const el = $.createDiv("dice-pack-log-row");
 	el.append(
-		formula(dicePack),
-		seporator(),
-		summa(dicePack)
+		createFormulaElement(dicePack),
+		createSeporatorElement(),
+		createSummaElement(dicePack)
 	);
 	return el;
 }

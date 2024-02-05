@@ -1,0 +1,15 @@
+.log-row-user {
+	display: flex;
+	flex-direction: row;
+}
+
+.log-row-user-icon {
+	width: 1em;
+	margin-right: 0.2em;
+	border-radius: 0.3em;
+}
+
+.log-row-user-name {
+	font-weight: bold;
+	margin-right: 0.3em;
+}

@@ -1,0 +1,37 @@
+.notify-root {
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+	top: 1em;
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.notify-block-icon {
+	width: 1em;
+	margin-right: 0.2em;
+	border-radius: 0.3em;
+}
+
+.notify-block-name {
+	font-weight: bold;
+	margin-right: 0.3em;
+}
+
+.notify-block-panel {
+	display: flex;
+	flex-direction: column;
+}
+
+.notify-block {
+	display: flex;
+	flex-direction: row;
+}
+
+.notify-inner-text {
+	color: black;
+}
+
+.notify-inner-dicepack {
+	color: black;
+}

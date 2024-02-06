@@ -21,11 +21,15 @@
 .notify-block-panel {
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 0.5em;
 }
 
 .notify-block {
 	display: flex;
 	flex-direction: row;
+	margin: 0 2em 0.5em 0;
+	background-color: beige;
+	overflow: hidden;
 }
 
 .notify-inner-text {

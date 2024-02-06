@@ -1,11 +1,12 @@
-import { NotifyService } from "./notify/notify-service.js";
 import { SocketService } from "./socket-service.js";
 import { StorageService } from "./storage-service.js";
 
-const UI = {
+window.DICER_UI = {
 	namePicker: null,
 	colorPicker: null,
 	btnRoll: null,
+	logPanel: null,
+	notifyPanel: null,
 };
 
 window.$ = {
@@ -25,20 +26,19 @@ window.onload = () => {
 }
 
 function init() {
-
-	UI.namePicker = document.querySelector("#name-picker");
-	UI.colorPicker = document.querySelector("#color-picker");
-	UI.btnRoll = document.querySelector("#btn-roll");
+	DICER_UI.namePicker = document.querySelector("#name-picker");
+	DICER_UI.colorPicker = document.querySelector("#color-picker");
+	DICER_UI.logPanel = document.querySelector("#log-panel");
+	DICER_UI.notifyPanel = document.querySelector("#notify-panel");
+	DICER_UI.btnRoll = document.querySelector("#btn-roll");
 
 	const { name, theme } = StorageService.getProps();
-	UI.namePicker.value = name;
-	UI.colorPicker.value = theme;
-
-	NotifyService.init(document.querySelector("#log-panel"));
+	DICER_UI.namePicker.value = name;
+	DICER_UI.colorPicker.value = theme;
 }
 
 function bind() {
-	UI.btnRoll.onclick = () => {
+	DICER_UI.btnRoll.onclick = () => {
 		SocketService.roll([
 			{
 				face: 20,
@@ -50,11 +50,11 @@ function bind() {
 			}
 		]);
 	}
-	UI.namePicker.addEventListener("blur", (e) => {
+	DICER_UI.namePicker.addEventListener("blur", (e) => {
 		StorageService.setName(e.target.value);
 		SocketService.updateUser();
 	}, false);
-	UI.colorPicker.addEventListener("change", (e) => {
+	DICER_UI.colorPicker.addEventListener("change", (e) => {
 		StorageService.setTheme(e.target.value);
 		SocketService.updateUser();
 	}, false);

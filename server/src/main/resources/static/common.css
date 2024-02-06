@@ -8,6 +8,7 @@ body {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	font-family: monospace;
 }
 
 #root {
@@ -22,14 +23,33 @@ body {
 	background-color: #e3e3e3;
 }
 
-#log-panel {
-	font-family: monospace;
+#sandbox {
 	flex-grow: 1;
-	overflow-y: scroll;
+	position: relative;
+}
+
+.sandbox-tab {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+#log-panel {
 	display: flex;
 	flex-direction: column-reverse;
 	overflow-x: hidden;
 	overflow-y: scroll;
+}
+
+#notify-panel {
+	overflow: hidden;
+	display: flex;
+	flex-direction: column-reverse;
+	left: auto;
+	width: 15em;
+	align-items: flex-end;
 }
 
 .log-row {

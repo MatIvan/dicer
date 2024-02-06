@@ -7,8 +7,17 @@ import { InnerDicePack } from "./inner-dice-pack.js";
  * @typedef {import("./user-registry.js").User} User
  */
 
-/** @type {HTMLElement} */
-var root;
+function anim(block, step) {
+	setTimeout(() => {
+		console.log("tick");
+		block.style.width = String(step) + "em";
+		if (step > 12) {
+			setTimeout(() => { block.remove() }, 3000);
+		} else {
+			anim(block, step + 1);
+		}
+	}, 15);
+}
 
 /**
  * @param {User} user  
@@ -16,15 +25,9 @@ var root;
  */
 function show(user, inner) {
 	const block = NotifyBlock.create(user, inner);
-	root.insertBefore(block, root.firstChild);
-	/*setTimeout(() => {
-		block.remove();
-	}, 5000);*/
-}
-
-function init(container) {
-	root = $.createDiv("notify-root");
-	container.append(root);
+	DICER_UI.notifyPanel.insertBefore(block, DICER_UI.notifyPanel.firstChild);
+	block.style.width = "2em";
+	anim(block, 2);
 }
 
 /**
@@ -46,7 +49,6 @@ function roll(user, dicePack) {
 }
 
 export const NotifyService = {
-	init,
 	roll,
 	info
 };

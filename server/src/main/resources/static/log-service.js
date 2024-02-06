@@ -1,17 +1,13 @@
 import { DicePackLogRow } from "./ui/dice-pack-log-row.js";
 import { UserLogRow } from "./ui/user-log-row.js";
 
-const UI = {
-	logPanel: document.querySelector("#log-panel"),
-}
-
 function log(user, message) {
 	const row = $.createDiv("log-row");
 	row.append(
 		UserLogRow.create(user),
 		getMessageElement(message)
 	);
-	UI.logPanel.insertBefore(row, UI.logPanel.firstChild);
+	DICER_UI.logPanel.insertBefore(row, DICER_UI.logPanel.firstChild);
 }
 
 function getMessageElement(message) {

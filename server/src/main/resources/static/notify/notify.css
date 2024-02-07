@@ -18,10 +18,16 @@
 	margin-right: 0.3em;
 }
 
+.notify-block-cap {
+	display: flex;
+	flex-direction: row;
+}
+
 .notify-block-panel {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.5em;
+	width: 100%;
 }
 
 .notify-block {
@@ -38,4 +44,24 @@
 
 .notify-inner-dicepack {
 	color: black;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.notify-inner-dicepack-group-cap {
+	text-align: center;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	font-weight: bold;
+}
+
+.notify-inner-dicepack-group-val {
+	text-align: center;
+	margin: 0.3em;
+}
+
+.notify-inner-dicepack-group {
+	margin: 0.2em;
+	border: solid 1px burlywood;
+	border-radius: 0.4em;
 }

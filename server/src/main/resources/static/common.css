@@ -11,6 +11,14 @@ body {
 	font-family: monospace;
 }
 
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
+
 #root {
 	max-width: 500px;
 	overflow: hidden;

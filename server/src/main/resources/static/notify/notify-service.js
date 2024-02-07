@@ -22,9 +22,10 @@ function anim(block, step) {
 /**
  * @param {User} user  
  * @param {HTMLElement} inner 
+ * @param {DicePack} dicePack 
  */
-function show(user, inner) {
-	const block = NotifyBlock.create(user, inner);
+function show(user, inner, dicePack) {
+	const block = NotifyBlock.create(user, inner, dicePack);
 	DICER_UI.notifyPanel.insertBefore(block, DICER_UI.notifyPanel.firstChild);
 	block.style.width = "2em";
 	anim(block, 2);
@@ -45,7 +46,7 @@ function info(user, text) {
  */
 function roll(user, dicePack) {
 	const inner = InnerDicePack.create(dicePack);
-	show(user, inner);
+	show(user, inner, dicePack);
 }
 
 export const NotifyService = {

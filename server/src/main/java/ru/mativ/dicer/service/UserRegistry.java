@@ -1,6 +1,8 @@
 package ru.mativ.dicer.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -55,6 +57,10 @@ public class UserRegistry {
 		} catch (UserNotFoundDicerException e) {
 			LOG.warn(e.getLocalizedMessage());
 		}
+	}
+
+	public List<User> getAll() {
+		return new ArrayList<User>(users.values());
 	}
 
 }

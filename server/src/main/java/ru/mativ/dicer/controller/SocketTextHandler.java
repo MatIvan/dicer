@@ -81,9 +81,16 @@ public class SocketTextHandler extends TextWebSocketHandler {
 		try {
 			User user = socketService.getUser(session);
 			Method method = getMethod(cmd);
-			Class<?> dataClass = method.getParameterTypes()[1]; // 0 - User, 1 - data
-			Object obj = rpcParser.parseData(cmd.getData(), dataClass);
-			method.invoke(rpcController, user, obj);
+			Class<?>[] params = method.getParameterTypes();
+			if (params.length == 1) {
+				method.invoke(rpcController, user);
+				return;
+			} else if (params.length == 2) {
+				Class<?> dataClass = method.getParameterTypes()[1]; // 0 - User, 1 - data
+				Object obj = rpcParser.parseData(cmd.getData(), dataClass);
+				method.invoke(rpcController, user, obj);
+				return;
+			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			LOG.error(sessionId, e);
 			throw new MethodRpcException();
@@ -94,6 +101,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 			LOG.error(sessionId, e);
 			throw new InternalRpcException();
 		}
+		throw new MethodRpcException();
 	}
 
 	private Method getMethod(RpcPayload cmd) throws MethodRpcException {

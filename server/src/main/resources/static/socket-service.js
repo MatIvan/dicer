@@ -46,8 +46,13 @@ function roll(dices) {
 	send("roll", { dices: dices });
 }
 
+function users() {
+	send("users");
+}
+
 export const SocketService = {
 	connect,
 	updateUser,
 	roll,
+	users,
 };

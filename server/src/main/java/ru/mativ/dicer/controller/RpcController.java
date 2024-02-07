@@ -48,4 +48,9 @@ public class RpcController {
 		rpc.userUpdated(user);
 	}
 
+	@DiceControllerMethod(type = "users")
+	public void update(User user) {
+		LOG.info(String.valueOf(user));
+		rpc.usersList(user);
+	}
 }

@@ -34,6 +34,16 @@ const COMMANDS = {
 		const user = UserRegistry.get(userId);
 		const pack = new DicePack(dicePack);
 		DicerService.onroll(user, pack);
+	},
+
+	USERS(data) {
+		console.log("USERS: ", data);
+		data.forEach(user => {
+			if (!UserRegistry.isAmI(user)) {
+				UserRegistry.put(user);
+			}
+		});
+		DicerService.info(null, "users updated.");
 	}
 
 }

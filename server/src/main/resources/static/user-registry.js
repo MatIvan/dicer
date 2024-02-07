@@ -40,10 +40,16 @@ function remove(user) {
 function setMyId(id) {
 	myId = id;
 }
+
+function isAmI(user) {
+	return user.userId === myId;
+}
+
 export const UserRegistry = {
 	put,
 	update,
 	get,
 	remove,
 	setMyId,
+	isAmI,
 };

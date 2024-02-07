@@ -22,6 +22,7 @@ window.onload = () => {
 	bind();
 	SocketService.connect(() => {
 		console.log("connected.");
+		SocketService.users();
 	});
 }
 

@@ -11,6 +11,7 @@ import ru.mativ.dicer.dto.WellcomeDto;
 import ru.mativ.dicer.entity.DicePack;
 import ru.mativ.dicer.entity.User;
 import ru.mativ.dicer.service.SocketService;
+import ru.mativ.dicer.service.UserRegistry;
 
 @Service
 public class RpcService {
@@ -18,6 +19,9 @@ public class RpcService {
 
 	@Autowired
 	SocketService socketService;
+
+	@Autowired
+	UserRegistry userRegistry;
 
 	public void wellcome(User user) {
 		LOG.debug(String.valueOf(user));
@@ -49,6 +53,12 @@ public class RpcService {
 		LOG.debug(String.valueOf(user));
 		UserDto dto = user.toDto();
 		socketService.sendToAll(RpcTypes.REMOVE_USER, dto);
+	}
+
+	public void usersList(User user) {
+		LOG.debug(String.valueOf(user));
+		UserDto[] dtoArray = userRegistry.getAll().stream().map(u -> u.toDto()).toArray(UserDto[]::new);
+		socketService.sendTo(user.getId(), RpcTypes.USERS, dtoArray);
 	}
 
 }

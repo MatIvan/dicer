@@ -1,3 +1,4 @@
+import DicePack from "./entity/dice-pack.js";
 import { SicketHandler } from "./socket-handler.js";
 import { StorageService } from "./storage-service.js";
 
@@ -42,8 +43,11 @@ function updateUser() {
 	send("update", StorageService.getProps());
 }
 
-function roll(dices) {
-	send("roll", { dices: dices });
+/**
+ * @param {DicePack} dicePack 
+ */
+function roll(dicePack) {
+	send("roll", dicePack);
 }
 
 function users() {

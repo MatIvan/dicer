@@ -1,10 +1,10 @@
 import { SocketService } from "./socket-service.js";
 import { StorageService } from "./storage-service.js";
+import { Dicepad } from "./dicepad/dicepad-panel.js"
 
 window.DICER_UI = {
 	namePicker: null,
 	colorPicker: null,
-	btnRoll: null,
 	logPanel: null,
 	notifyPanel: null,
 };
@@ -39,18 +39,7 @@ function init() {
 }
 
 function bind() {
-	DICER_UI.btnRoll.onclick = () => {
-		SocketService.roll([
-			{
-				face: 20,
-				count: 2,
-			},
-			{
-				face: 4,
-				count: 1
-			}
-		]);
-	}
+	Dicepad.bind();
 	DICER_UI.namePicker.addEventListener("blur", (e) => {
 		StorageService.setName(e.target.value);
 		SocketService.updateUser();

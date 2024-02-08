@@ -5,13 +5,12 @@ import { SocketService } from "../socket-service.js";
  * @param {DicePack} dicePack 
  */
 function createFormulaElement(dicePack) {
-	const { dices } = dicePack;
 	let res = dicePack.getFormula();
 	const el = $.createDiv("notify-formula-content");
 	el.innerText = res;
 	el.title = "/roll " + res;
 	el.onclick = () => {
-		SocketService.roll(dices);
+		SocketService.roll(dicePack);
 	}
 	return el;
 }

@@ -9,7 +9,12 @@ import DiceGroup from "./dice-group.js";
  * @param {DicePackDto} dto
  */
 export default function DicePack(dto) {
-	this.dices = dto.dices.map(diceGroupDto => new DiceGroup(diceGroupDto));
+	/** @type {DiceGroup[]} */
+	this.dices = [];
+
+	if (dto) {
+		this.dices = dto.dices.map(diceGroupDto => new DiceGroup(diceGroupDto));
+	}
 
 	this.getSum = () => {
 		let sum = 0;
@@ -20,4 +25,17 @@ export default function DicePack(dto) {
 	this.getFormula = () => {
 		return this.dices.map(dice => dice.getFormula()).join("+");
 	}
+
+	this.appendDice = (face) => {
+		const i = this.dices.findIndex(d => {
+			return d.face === face;
+		});
+		if (i < 0) {
+		const dg = new DiceGroup({ face, count: 1 });
+		this.dices.push(dg);
+			return;
+		}
+		this.dices[i].count++;
+	}
+
 }

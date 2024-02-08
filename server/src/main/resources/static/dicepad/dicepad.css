@@ -1,0 +1,53 @@
+#dicepad-panel {}
+
+#dicepad-input {
+	display: flex;
+	flex-direction: row;
+}
+
+#dicepad-input-cap {}
+
+#dicepad-input-val {
+	flex-grow: 1;
+}
+
+#dicepad-input-btn-clean {}
+
+#dicepad-input-btn-roll {}
+
+#dicepad-picker {
+	margin: 1em;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.dicepad-picker-btn {
+	width: 5em;
+	height: 5em;
+	background-color: transparent;
+	border: none;
+}
+
+.dicepad-picker-btn:hover {
+	cursor: pointer;
+}
+
+.dicepad-picker-btn img {
+	width: 4em;
+	height: 4em;
+	filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, .5));
+}
+
+.dicepad-picker-btn:hover img {
+	width: 4.5em;
+	height: 4.5em;
+	filter: drop-shadow(0 0 1em rgba(0, 0, 0, 1));
+}
+
+.dicepad-picker-btn:active img {
+	width: 3.5em;
+	height: 3.5em;
+	filter: drop-shadow(0 0 1em rgba(0, 0, 0, 1));
+}

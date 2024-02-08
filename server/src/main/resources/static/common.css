@@ -1,3 +1,5 @@
+@import "./dicepad/dicepad.css";
+
 html {
 	height: 100vh;
 }
@@ -58,16 +60,6 @@ body {
 	left: auto;
 	/*width: 15em;*/
 	align-items: flex-end;
-}
-
-.log-row {
-	display: flex;
-	flex-direction: row;
-	margin: 0.2em;
-}
-
-.log-row-text {
-	font-style: italic;
 }
 
 .filler-grow {

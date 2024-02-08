@@ -1,7 +1,5 @@
 import DicePack from "../entity/dice-pack.js";
 import { NotifyBlock } from "./notify-block.js";
-import { InnerText } from "./inner-text.js";
-import { InnerDicePack } from "./inner-dice-pack.js";
 
 /**
  * @typedef {import("./user-registry.js").User} User
@@ -20,12 +18,9 @@ function anim(block, step) {
 }
 
 /**
- * @param {User} user  
- * @param {HTMLElement} inner 
- * @param {DicePack} dicePack 
+ * @param {HTMLElement} block 
  */
-function show(user, inner, dicePack) {
-	const block = NotifyBlock.create(user, inner, dicePack);
+function show(block) {
 	DICER_UI.notifyPanel.insertBefore(block, DICER_UI.notifyPanel.firstChild);
 	block.style.width = "2em";
 	anim(block, 2);
@@ -36,8 +31,8 @@ function show(user, inner, dicePack) {
  * @param {string} text 
  */
 function info(user, text) {
-	const inner = InnerText.create(text);
-	show(user, inner);
+	//const inner = NotifyBlock.createInfo(user, text);
+	//show(inner);
 }
 
 /**
@@ -45,8 +40,8 @@ function info(user, text) {
  * @param {DicePack} dicePack 
  */
 function roll(user, dicePack) {
-	const inner = InnerDicePack.create(dicePack);
-	show(user, inner, dicePack);
+	//const inner = NotifyBlock.createDicePack(user, dicePack);
+	//show(inner, dicePack);
 }
 
 export const NotifyService = {

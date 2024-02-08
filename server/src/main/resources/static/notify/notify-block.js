@@ -1,4 +1,6 @@
 import { DicePackLogRow } from "../ui/dice-pack-log-row.js";
+import { InnerText } from "./inner-text.js";
+import { InnerDicePack } from "./inner-dice-pack.js";
 
 /**
  * @typedef {import("../user-registry.js").User} User
@@ -23,6 +25,7 @@ function create(user, inner, dicePack) {
 	const name = $.createDiv("notify-block-name");
 	name.style.color = user.theme;
 	name.innerText = user.name + ":";
+
 	const cap = $.createDiv("notify-block-cap");
 	cap.append(name);
 	if (dicePack) {
@@ -39,6 +42,27 @@ function create(user, inner, dicePack) {
 	return el;
 }
 
+/**
+ * @param {User} user 
+ * @param {string} text 
+ * @returns {HTMLElement} element
+ */
+function createInfo(user, text) {
+	const inner = InnerText.create(text);
+	return create(user, inner);
+}
+
+/**
+ * @param {User} user 
+ * @param {DicePack} dicePack 
+ * @returns {HTMLElement} element
+ */
+function createDicePack(user, dicePack) {
+	const inner = InnerDicePack.create(dicePack);
+	return create(user, inner, dicePack);
+}
+
 export const NotifyBlock = {
-	create
+	createInfo,
+	createDicePack
 }

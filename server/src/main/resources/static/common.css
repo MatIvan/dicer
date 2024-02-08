@@ -69,3 +69,7 @@ body {
 .log-row-text {
 	font-style: italic;
 }
+
+.filler-grow {
+	flex-grow: 1;
+}

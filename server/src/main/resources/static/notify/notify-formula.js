@@ -7,7 +7,7 @@ import { SocketService } from "../socket-service.js";
 function createFormulaElement(dicePack) {
 	const { dices } = dicePack;
 	let res = dicePack.getFormula();
-	const el = $.createDiv("dice-pack-log-row-formula");
+	const el = $.createDiv("notify-formula-content");
 	el.innerText = res;
 	el.title = "/roll " + res;
 	el.onclick = () => {
@@ -17,7 +17,7 @@ function createFormulaElement(dicePack) {
 }
 
 function createSeporatorElement() {
-	const el = $.createDiv("dice-pack-log-row-seporator");
+	const el = $.createDiv("notify-formula-seporator");
 	el.innerText = "=";
 	return el;
 }
@@ -26,7 +26,7 @@ function createSeporatorElement() {
  * @param {DicePack} dicePack 
  */
 function createSummaElement(dicePack) {
-	const el = $.createDiv("dice-pack-log-row-summa");
+	const el = $.createDiv("notify-formula-summa");
 	el.innerText = dicePack.getSum();
 	el.title = dicePack.dices.map(dice => {
 		return dice.getFormula() + ": " + dice.values.join(", ");
@@ -38,7 +38,7 @@ function createSummaElement(dicePack) {
  * @param {DicePack} dicePack 
  */
 function create(dicePack) {
-	const el = $.createDiv("dice-pack-log-row");
+	const el = $.createDiv("notify-formula-row");
 	el.append(
 		createFormulaElement(dicePack),
 		createSeporatorElement(),

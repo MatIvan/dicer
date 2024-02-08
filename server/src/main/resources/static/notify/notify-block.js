@@ -1,4 +1,4 @@
-import { DicePackLogRow } from "../ui/dice-pack-log-row.js";
+import { DicePackLogRow } from "./notify-formula.js";
 import { InnerText } from "./inner-text.js";
 import { InnerDicePack } from "./inner-dice-pack.js";
 
@@ -32,6 +32,9 @@ function create(user, inner, dicePack) {
 		const formula = DicePackLogRow.create(dicePack);
 		cap.append(formula);
 	}
+	const time = $.createDiv("notify-block-cap-time");
+	time.innerText = (new Date()).toLocaleTimeString();
+	cap.append($.createDiv("filler-grow"), time);
 
 	const panel = $.createDiv("notify-block-panel");
 	panel.append(cap, inner);

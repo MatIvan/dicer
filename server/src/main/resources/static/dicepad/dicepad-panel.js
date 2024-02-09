@@ -31,7 +31,13 @@ function bind() {
 
 	const btnRoll = document.querySelector("#dicepad-input-btn-roll");
 	btnRoll.onclick = () => {
-		SocketService.roll(dicePack);
+		if (dicePack.dices.length == 0) {
+			const dp = new DicePack();
+			dp.dices = [{ face: 20, count: 2 }];
+			SocketService.roll(dp);
+		} else {
+			SocketService.roll(dicePack);
+		}
 		dicePack = new DicePack();
 		refreshInput();
 	}

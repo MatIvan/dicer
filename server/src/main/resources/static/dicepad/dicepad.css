@@ -3,17 +3,39 @@
 #dicepad-input {
 	display: flex;
 	flex-direction: row;
+	margin: 0 1.5em;
+	padding: 0.4em;
+	border: solid 1px black;
+	border-radius: 0.4em;
+	background-color: #f7f7f7;
+	flex-wrap: wrap;
 }
 
-#dicepad-input-cap {}
+#dicepad-input-cap {
+	margin-left: 0.4em;
+	font-family: cursive;
+
+}
 
 #dicepad-input-val {
 	flex-grow: 1;
+	background-color: white;
+	padding: 0.2em 0.3em;
+	margin: 0 0.4em;
+	border: solid 1px burlywood;
 }
 
-#dicepad-input-btn-clean {}
+#dicepad-input-btn-clean {
+	margin: 0 0.2em;
+	display: none;
+}
 
-#dicepad-input-btn-roll {}
+#dicepad-input-btn-roll {
+	margin: 0 0.2em;
+	font-family: cursive;
+	font-size: medium;
+	width: 5em;
+}
 
 #dicepad-picker {
 	margin: 1em;

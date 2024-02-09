@@ -2,4 +2,4 @@
 
 Dice room server
 
-![screenshot](screen.png)
+![screenshot](server/screen.png)

@@ -1,4 +1,5 @@
 @import "./dicepad/dicepad.css";
+@import "./theme/theme.css";
 
 html {
 	height: 100vh;

@@ -1,8 +1,10 @@
 import { SocketService } from "./socket-service.js";
 import { StorageService } from "./storage-service.js";
 import { Dicepad } from "./dicepad/dicepad-panel.js"
+import { ThemeService } from "./theme/theme-service.js"
 
 window.DICER_UI = {
+	theme: "",
 	namePicker: null,
 	colorPicker: null,
 	logPanel: null,
@@ -27,6 +29,8 @@ window.onload = () => {
 }
 
 function init() {
+	ThemeService.init();
+
 	DICER_UI.namePicker = document.querySelector("#name-picker");
 	DICER_UI.colorPicker = document.querySelector("#color-picker");
 	DICER_UI.logPanel = document.querySelector("#log-panel");

@@ -1,0 +1,44 @@
+#theme-switcher-input {
+	display: none;
+}
+
+#theme-switcher-label {
+	border: 2px solid gray;
+	border-radius: 0.6em;
+	padding: 0.2em;
+	cursor: pointer;
+	width: 2.6em;
+	height: 1em;
+	margin-left: 0.2em;
+}
+
+.theme-switcher-icon {
+	width: 1em;
+	height: 1em;
+}
+
+#theme-switcher-label>.sun {
+	transform: translateX(25px);
+	transition: .3s;
+}
+
+#theme-switcher-label>.moon {
+	transform: translateX(0px);
+	opacity: 0;
+	transition: .3s;
+}
+
+#theme-switcher-input:checked~#theme-switcher-label>.sun {
+	opacity: 0;
+	transform: translateX(0px);
+}
+
+#theme-switcher-input:checked~#theme-switcher-label>.moon {
+	opacity: 1;
+	transform: translateX(-25px);
+}
+
+#theme-switcher-input:checked~.content {
+	background: black;
+	color: white;
+}

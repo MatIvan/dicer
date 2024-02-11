@@ -92,4 +92,5 @@ body.dark {
 #name-picker {
     margin-left: 0.4em;
     border: solid 1px burlywood;
+    width: 10em;
 }

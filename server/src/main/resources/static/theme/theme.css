@@ -10,6 +10,12 @@
 	width: 2.6em;
 	height: 1em;
 	margin-left: 0.2em;
+	background-color: white;
+}
+
+.dark #theme-switcher-label {
+	border: 2px solid gray;
+	background-color: black;
 }
 
 .theme-switcher-icon {
@@ -18,7 +24,7 @@
 }
 
 #theme-switcher-label>.sun {
-	transform: translateX(25px);
+	transform: translateX(1.3em);
 	transition: .3s;
 }
 
@@ -35,7 +41,8 @@
 
 #theme-switcher-input:checked~#theme-switcher-label>.moon {
 	opacity: 1;
-	transform: translateX(-25px);
+	transform: translateX(-1.3em);
+	filter: invert(94%) sepia(6%) saturate(0%) hue-rotate(3deg) brightness(105%) contrast(105%);
 }
 
 #theme-switcher-input:checked~.content {

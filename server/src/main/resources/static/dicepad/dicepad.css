@@ -11,6 +11,11 @@
 	flex-wrap: wrap;
 }
 
+.dark #dicepad-input {
+	border-color: white;
+	background-color: rgb(73 73 73);
+}
+
 #dicepad-input-cap {
 	margin-left: 0.4em;
 	font-family: cursive;
@@ -23,6 +28,10 @@
 	padding: 0.2em 0.3em;
 	margin: 0 0.4em;
 	border: solid 1px burlywood;
+}
+
+.dark #dicepad-input-val {
+	color: black;
 }
 
 #dicepad-input-btn-clean {
@@ -62,14 +71,26 @@
 	filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, .5));
 }
 
+.dark .dicepad-picker-btn img {
+	filter: drop-shadow(5px 5px 5px rgba(150, 150, 150, .7));
+}
+
 .dicepad-picker-btn:hover img {
 	width: 4.5em;
 	height: 4.5em;
 	filter: drop-shadow(0 0 1em rgba(0, 0, 0, 1));
 }
 
+.dark .dicepad-picker-btn:hover img {
+	filter: drop-shadow(5px 5px 5px rgba(150, 150, 150, 1));
+}
+
 .dicepad-picker-btn:active img {
 	width: 3.5em;
 	height: 3.5em;
 	filter: drop-shadow(0 0 1em rgba(0, 0, 0, 1));
+}
+
+.dark .dicepad-picker-btn:active img {
+	filter: drop-shadow(5px 5px 5px rgba(150, 150, 150, 1));
 }

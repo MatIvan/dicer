@@ -14,6 +14,11 @@ body {
 	font-family: monospace;
 }
 
+body.dark {
+	background-color: black;
+	color: white;
+}
+
 .red {
 	color: red;
 }
@@ -77,6 +82,11 @@ body {
 	background-color: #f7f7f7;
 	flex-wrap: wrap;
 	justify-content: center;
+}
+
+.dark #props-panel {
+	border-color: white;
+	background-color: rgb(73 73 73);
 }
 
 #name-picker {

@@ -5,7 +5,7 @@ import DicePack from "../entity/dice-pack.js";
  * @param {string} text 
  */
 function info(user, text) {
-	// TODO
+    // TODO
 }
 
 /**
@@ -13,10 +13,10 @@ function info(user, text) {
  * @param {DicePack} dicePack 
  */
 function roll(user, dicePack) {
-	// TODO
+    // TODO
 }
 
 export const NotifyService = {
-	roll,
-	info
+    roll,
+    info
 };

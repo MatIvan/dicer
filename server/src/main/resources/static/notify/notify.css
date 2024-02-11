@@ -1,106 +1,106 @@
 .notify-root {
-	position: absolute;
-	right: 1em;
-	bottom: 1em;
-	top: 1em;
-	display: flex;
-	flex-direction: column-reverse;
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    top: 1em;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .notify-block-icon {
-	width: 1em;
-	margin-right: 0.2em;
-	border-radius: 0.3em;
+    width: 1em;
+    margin-right: 0.2em;
+    border-radius: 0.3em;
 }
 
 .notify-block-name {
-	font-weight: bold;
-	margin-right: 0.3em;
+    font-weight: bold;
+    margin-right: 0.3em;
 }
 
 .notify-block-cap {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .notify-block-cap-time {
-	font-size: 0.6em;
-	color: #959595;
-	font-family: sans-serif;
-	margin: 0.1em;
+    font-size: 0.6em;
+    color: #959595;
+    font-family: sans-serif;
+    margin: 0.1em;
 }
 
 .notify-block-panel {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 0.5em;
-	width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5em;
+    width: 100%;
 }
 
 .notify-block {
-	display: flex;
-	flex-direction: row;
-	margin: 0 0.5em 0.5em 0;
-	background-color: #f7f7f7;
-	border-bottom-left-radius: 0.3em;
-	border-top-left-radius: 0.3em;
-	padding: 2px;
+    display: flex;
+    flex-direction: row;
+    margin: 0 0.5em 0.5em 0;
+    background-color: #f7f7f7;
+    border-bottom-left-radius: 0.3em;
+    border-top-left-radius: 0.3em;
+    padding: 2px;
 }
 
 .dark .notify-block {
-	background-color: rgb(73 73 73);
+    background-color: rgb(73 73 73);
 }
 
 .notify-inner-text {
-	/*color: black;*/
+    /*color: black;*/
 }
 
 .notify-inner-dicepack {
-	color: black;
-	display: flex;
-	flex-wrap: wrap;
+    color: black;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .notify-inner-dicepack-group-cap {
-	text-align: center;
-	margin: 0 1em;
-	font-weight: bold;
+    text-align: center;
+    margin: 0 1em;
+    font-weight: bold;
 }
 
 .notify-inner-dicepack-group-val {
-	text-align: center;
-	margin: 0.3em 1em;
+    text-align: center;
+    margin: 0.3em 1em;
 }
 
 .notify-inner-dicepack-group {
-	margin: 0.4em;
-	border: solid 1px burlywood;
-	border-radius: 0.4em;
-	background-color: white;
+    margin: 0.4em;
+    border: solid 1px burlywood;
+    border-radius: 0.4em;
+    background-color: white;
 }
 
 .notify-formula-content {
-	display: inline;
+    display: inline;
 }
 
 .notify-formula-content:hover {
-	cursor: pointer;
-	color: blue;
+    cursor: pointer;
+    color: blue;
 }
 
 .notify-formula-seporator {
-	display: inline;
+    display: inline;
 }
 
 .notify-formula-summa {
-	display: inline;
+    display: inline;
 }
 
 .notify-formula-summa:hover {
-	cursor: pointer;
-	color: green;
+    cursor: pointer;
+    color: green;
 }
 
 .notify-formula-row {
-	display: inline;
+    display: inline;
 }

@@ -2,94 +2,94 @@
 @import "./theme/theme.css";
 
 html {
-	height: 100vh;
+    height: 100vh;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	font-family: monospace;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: monospace;
 }
 
 body.dark {
-	background-color: black;
-	color: white;
+    background-color: black;
+    color: white;
 }
 
 .red {
-	color: red;
+    color: red;
 }
 
 .green {
-	color: green;
+    color: green;
 }
 
 #root {
-	max-width: 500px;
-	overflow: hidden;
-	font-size: large;
-	margin: 1em;
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    font-size: large;
+    margin: 1em;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 #sandbox {
-	flex-grow: 1;
-	position: relative;
+    flex-grow: 1;
+    position: relative;
 }
 
 .sandbox-tab {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 #log-panel {
-	display: flex;
-	flex-direction: column-reverse;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	margin: 0.5em;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 0.5em;
 }
 
 #notify-panel {
-	overflow: hidden;
-	display: flex;
-	flex-direction: column-reverse;
-	left: auto;
-	/*width: 15em;*/
-	align-items: flex-end;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+    left: auto;
+    /*width: 15em;*/
+    align-items: flex-end;
 }
 
 .filler-grow {
-	flex-grow: 1;
+    flex-grow: 1;
 }
 
 #props-panel {
-	display: flex;
-	flex-direction: row;
-	margin: 0 1.5em;
-	padding: 0.4em;
-	border: solid 1px black;
-	border-radius: 0.4em;
-	background-color: #f7f7f7;
-	flex-wrap: wrap;
-	justify-content: center;
+    display: flex;
+    flex-direction: row;
+    margin: 0 1.5em;
+    padding: 0.4em;
+    border: solid 1px black;
+    border-radius: 0.4em;
+    background-color: #f7f7f7;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .dark #props-panel {
-	border-color: white;
-	background-color: rgb(73 73 73);
+    border-color: white;
+    background-color: rgb(73 73 73);
 }
 
 #name-picker {
-	margin-left: 0.4em;
-	border: solid 1px burlywood;
+    margin-left: 0.4em;
+    border: solid 1px burlywood;
 }

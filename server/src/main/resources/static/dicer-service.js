@@ -11,8 +11,8 @@ import DicePack from "../entity/dice-pack.js";
  * @param {string} text
  */
 function info(user, text) {
-	LogService.info(user, text);
-	NotifyService.info(user, text);
+    LogService.info(user, text);
+    NotifyService.info(user, text);
 }
 
 /**
@@ -20,11 +20,11 @@ function info(user, text) {
  * @param {DicePack} dicePack 
  */
 function onroll(user, dicePack) {
-	LogService.roll(user, dicePack);
-	NotifyService.roll(user, dicePack);
+    LogService.roll(user, dicePack);
+    NotifyService.roll(user, dicePack);
 }
 
 export const DicerService = {
-	onroll,
-	info
+    onroll,
+    info
 };
